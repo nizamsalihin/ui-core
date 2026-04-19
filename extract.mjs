@@ -27,7 +27,7 @@ const variants = [
   },
   {
     id: 'icon',
-    html: `<button class="button button--icon" id="btn-icon">\n  <img src="https://www.svgrepo.com/show/511004/plus.svg" alt="icon" style="filter: invert(1);" />\n  Icon Action\n</button>`,
+    html: `<button class="button button--icon" id="btn-icon">\n  <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/plus.svg" alt="icon" style="filter: invert(1);" />\n  Icon Action\n</button>`,
     css: `${baseCss}\n\n.button.button--icon {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: 5px;\n    padding: 9px;\n    flex-shrink: 0;\n\n    > img {\n        aspect-ratio: 1 / 1;\n        height: 20px;\n        width: 20px;\n        display: block;\n    }\n}`,
     js: `const btnIcon = document.getElementById('btn-icon');\nif (btnIcon) {\n  btnIcon.addEventListener('click', () => {\n    alert('Icon action triggered!');\n  });\n}`
   },
