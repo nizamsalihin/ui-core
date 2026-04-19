@@ -1,0 +1,72 @@
+.home-header {
+  margin-bottom: 3rem;
+}
+
+.component-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.component-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+}
+
+.component-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  border-color: var(--primary-color);
+}
+
+.component-card-preview {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--hover-bg);
+  border-bottom: 1px solid var(--border-color);
+  padding: 2rem;
+  overflow: hidden;
+}
+
+/* We need to inject the CSS for the preview components in the global scope 
+   so they render correctly on the home page as well. Or we can inline it.
+   For now, we will add global styles for the previewed components below */
+.preview-wrapper {
+  transform: scale(0.8); /* Scale down preview slightly */
+}
+
+.component-card-content {
+  padding: 1.5rem;
+}
+
+.component-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+.component-card-desc {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.variant-count {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  background-color: rgba(0, 112, 243, 0.1); /* Primary color with opacity */
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
