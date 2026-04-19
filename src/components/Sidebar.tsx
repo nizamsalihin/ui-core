@@ -67,8 +67,8 @@ export default function Sidebar() {
 
   return (
     <>
-      <button 
-        className="mobile-nav-toggle" 
+      <button
+        className="mobile-nav-toggle"
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Toggle navigation"
       >
@@ -83,8 +83,13 @@ export default function Sidebar() {
 
       <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
-          <Link href="/" className="logo">
-            UI Docs
+            <Link href="/" className="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+              <rect width="256" height="256" rx="56" fill="var(--primary-color)" />
+              <rect x="76" y="76" width="104" height="104" rx="24" fill="#ffffff" />
+              <circle cx="128" cy="128" r="16" fill="var(--primary-color)" />
+            </svg>
+            <span>UI CORE</span>
           </Link>
         </div>
         <Suspense fallback={<div className="sidebar-nav">Loading navigation...</div>}>
