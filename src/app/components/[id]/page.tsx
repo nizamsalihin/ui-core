@@ -3,7 +3,7 @@
 import { use, useState, useEffect, useRef } from 'react';
 import { components } from '@/data/components';
 import ThemeTweaks from '@/components/ThemeTweaks';
-import { notFound } from 'next/navigation';
+import { notFound, useRouter, useSearchParams } from 'next/navigation';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import './ComponentDetail.css';
@@ -18,7 +18,22 @@ export default function ComponentDetailPage({ params }: { params: Promise<{ id: 
     notFound();
   }
 
-  const [activeVariantId, setActiveVariantId] = useState(component.variants[0]?.id);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const queryVariant = searchParams.get('variant');
+
+  const [activeVariantId, setActiveVariantId] = useState(queryVariant || component.variants[0]?.id);
+
+  useEffect(() => {
+    if (queryVariant && component.variants.some(v => v.id === queryVariant)) {
+      setActiveVariantId(queryVariant);
+    }
+  }, [queryVariant, component.variants]);
+
+  const handleVariantSelect = (variantId: string) => {
+    setActiveVariantId(variantId);
+    router.push(`/components/${id}?variant=${variantId}`, { scroll: false });
+  };
   const [activeTab, setActiveTab] = useState<'html' | 'css' | 'js'>('html');
   const [copySuccess, setCopySuccess] = useState(false);
 
@@ -108,26 +123,28 @@ export default function ComponentDetailPage({ params }: { params: Promise<{ id: 
   return (
     <div className="container component-detail-page">
       <header className="page-header">
-        <h1 className="page-title">{component.name}</h1>
+        <div className="page-header-top">
+          <h1 className="page-title">{component.name}</h1>
+          {component.variants.length > 1 && (
+            <div className="variants-dropdown">
+              <label htmlFor="variant-select" className="variants-dropdown-label">Variant:</label>
+              <select
+                id="variant-select"
+                className="variant-select"
+                value={activeVariantId}
+                onChange={(e) => handleVariantSelect(e.target.value)}
+              >
+                {component.variants.map((variant) => (
+                  <option key={variant.id} value={variant.id}>
+                    {variant.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+        </div>
         <p className="page-description">{component.description}</p>
       </header>
-
-      {component.variants.length > 1 && (
-        <div className="variants-selector">
-          <span className="variants-label">Variants:</span>
-          <div className="variants-buttons">
-            {component.variants.map((variant) => (
-              <button
-                key={variant.id}
-                className={`variant-btn ${variant.id === activeVariantId ? 'active' : ''}`}
-                onClick={() => setActiveVariantId(variant.id)}
-              >
-                {variant.name}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
 
       <div className="preview-section">
         <ThemeTweaks />
@@ -136,47 +153,47 @@ export default function ComponentDetailPage({ params }: { params: Promise<{ id: 
         </div>
       </div>
 
-      <div className="code-section">
-        <div className="code-header">
-          <div className="code-tabs">
-            <button
-              className={`code-tab ${activeTab === 'html' ? 'active' : ''}`}
-              onClick={() => setActiveTab('html')}
-            >
-              HTML
-            </button>
-            <button
-              className={`code-tab ${activeTab === 'css' ? 'active' : ''}`}
-              onClick={() => setActiveTab('css')}
-            >
-              CSS
-            </button>
-            <button
-              className={`code-tab ${activeTab === 'js' ? 'active' : ''}`}
-              onClick={() => setActiveTab('js')}
-            >
-              Javascript
+        <div className="code-section">
+          <div className="code-header">
+            <div className="code-tabs">
+              <button
+                className={`code-tab ${activeTab === 'html' ? 'active' : ''}`}
+                onClick={() => setActiveTab('html')}
+              >
+                HTML
+              </button>
+              <button
+                className={`code-tab ${activeTab === 'css' ? 'active' : ''}`}
+                onClick={() => setActiveTab('css')}
+              >
+                CSS
+              </button>
+              <button
+                className={`code-tab ${activeTab === 'js' ? 'active' : ''}`}
+                onClick={() => setActiveTab('js')}
+              >
+                Javascript
+              </button>
+            </div>
+            <button className="copy-btn" onClick={handleCopy}>
+              {copySuccess ? 'Copied!' : 'Copy Code'}
             </button>
           </div>
-          <button className="copy-btn" onClick={handleCopy}>
-            {copySuccess ? 'Copied!' : 'Copy Code'}
-          </button>
-        </div>
-        <div className="code-content" style={{ padding: 0 }}>
-          <SyntaxHighlighter
-            language={activeTab === 'js' ? 'javascript' : activeTab}
-            style={vscDarkPlus}
-            customStyle={{
-              margin: 0,
-              padding: '1.5rem',
-              background: 'transparent',
-              fontSize: '0.9rem',
-              lineHeight: '1.5',
-            }}
-          >
-            {activeVariant[activeTab]}
-          </SyntaxHighlighter>
-        </div>
+          <div className="code-content" style={{ padding: 0 }}>
+            <SyntaxHighlighter
+              language={activeTab === 'js' ? 'javascript' : activeTab}
+              style={vscDarkPlus}
+              customStyle={{
+                margin: 0,
+                padding: '1.5rem',
+                background: 'transparent',
+                fontSize: '0.9rem',
+                lineHeight: '1.5',
+              }}
+            >
+              {activeVariant[activeTab]}
+            </SyntaxHighlighter>
+          </div>
       </div>
     </div>
   );

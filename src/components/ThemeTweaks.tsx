@@ -6,7 +6,9 @@ import './ThemeTweaks.css';
 export default function ThemeTweaks() {
   const [isOpen, setIsOpen] = useState(false);
   const [primaryColor, setPrimaryColor] = useState('#0070f3');
+  const [primaryForeground, setPrimaryForeground] = useState('#ffffff');
   const [secondaryColor, setSecondaryColor] = useState('#1c1c1e');
+  const [secondaryForeground, setSecondaryForeground] = useState('#ffffff');
   const [borderRadius, setBorderRadius] = useState('8px');
 
   useEffect(() => {
@@ -14,14 +16,22 @@ export default function ThemeTweaks() {
     const computedStyles = getComputedStyle(root);
     
     const savedPrimary = localStorage.getItem('theme-primary');
+    const savedPrimaryFg = localStorage.getItem('theme-primary-fg');
     const savedSecondary = localStorage.getItem('theme-secondary');
+    const savedSecondaryFg = localStorage.getItem('theme-secondary-fg');
     const savedRadius = localStorage.getItem('theme-radius');
 
     if (savedPrimary) setPrimaryColor(savedPrimary);
     else setPrimaryColor(computedStyles.getPropertyValue('--primary-color').trim() || '#0070f3');
 
+    if (savedPrimaryFg) setPrimaryForeground(savedPrimaryFg);
+    else setPrimaryForeground(computedStyles.getPropertyValue('--primary-foreground').trim() || '#ffffff');
+
     if (savedSecondary) setSecondaryColor(savedSecondary);
     else setSecondaryColor(computedStyles.getPropertyValue('--secondary-color').trim() || '#1c1c1e');
+
+    if (savedSecondaryFg) setSecondaryForeground(savedSecondaryFg);
+    else setSecondaryForeground(computedStyles.getPropertyValue('--secondary-foreground').trim() || '#ffffff');
 
     if (savedRadius) setBorderRadius(savedRadius);
     else setBorderRadius(computedStyles.getPropertyValue('--border-radius').trim() || '8px');
@@ -33,10 +43,22 @@ export default function ThemeTweaks() {
     localStorage.setItem('theme-primary', val);
   };
 
+  const handlePrimaryFgChange = (val: string) => {
+    setPrimaryForeground(val);
+    document.documentElement.style.setProperty('--primary-foreground', val);
+    localStorage.setItem('theme-primary-fg', val);
+  };
+
   const handleSecondaryChange = (val: string) => {
     setSecondaryColor(val);
     document.documentElement.style.setProperty('--secondary-color', val);
     localStorage.setItem('theme-secondary', val);
+  };
+
+  const handleSecondaryFgChange = (val: string) => {
+    setSecondaryForeground(val);
+    document.documentElement.style.setProperty('--secondary-foreground', val);
+    localStorage.setItem('theme-secondary-fg', val);
   };
 
   const handleRadiusChange = (val: string) => {
@@ -85,6 +107,19 @@ export default function ThemeTweaks() {
           </div>
           
           <div className="tweak-item">
+            <label>Primary Foreground</label>
+            <div className="tweak-input-wrapper">
+              <input 
+                type="color" 
+                value={primaryForeground} 
+                onChange={(e) => handlePrimaryFgChange(e.target.value)} 
+                className="tweak-color"
+              />
+              <span>{primaryForeground}</span>
+            </div>
+          </div>
+          
+          <div className="tweak-item">
             <label>Secondary Color</label>
             <div className="tweak-input-wrapper">
               <input 
@@ -94,6 +129,19 @@ export default function ThemeTweaks() {
                 className="tweak-color"
               />
               <span>{secondaryColor}</span>
+            </div>
+          </div>
+
+          <div className="tweak-item">
+            <label>Secondary Foreground</label>
+            <div className="tweak-input-wrapper">
+              <input 
+                type="color" 
+                value={secondaryForeground} 
+                onChange={(e) => handleSecondaryFgChange(e.target.value)} 
+                className="tweak-color"
+              />
+              <span>{secondaryForeground}</span>
             </div>
           </div>
           

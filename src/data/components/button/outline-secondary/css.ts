@@ -12,6 +12,6 @@ export default `.button {
 
 .button.button--outline-secondary {
     background-color: transparent;
-    color: var(--color-secondary-foreground);
+    color: var(--color-secondary);
     border-color: var(--color-secondary);
 }`;

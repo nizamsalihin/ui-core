@@ -1,6 +1,8 @@
 :root {
   --primary-color: #0070f3;
+  --primary-foreground: #ffffff;
   --secondary-color: #1c1c1e;
+  --secondary-foreground: #ffffff;
   --bg-color: #ffffff;
   --text-color: #333333;
   --border-radius: 8px;
@@ -13,8 +15,9 @@
 
   /* Button Component Variables */
   --color-primary: var(--primary-color);
+  --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary-color);
-  --color-secondary-foreground: var(--text-color);
+  --color-secondary-foreground: var(--secondary-foreground);
   --color-orange-2: #ffedd5;
   --color-orange-3: #fdba74;
   --color-orange-4: #f97316;

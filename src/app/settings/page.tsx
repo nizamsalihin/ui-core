@@ -5,7 +5,9 @@ import './Settings.css';
 
 export default function SettingsPage() {
   const [primaryColor, setPrimaryColor] = useState('#0070f3');
+  const [primaryForeground, setPrimaryForeground] = useState('#ffffff');
   const [secondaryColor, setSecondaryColor] = useState('#1c1c1e');
+  const [secondaryForeground, setSecondaryForeground] = useState('#ffffff');
   const [borderRadius, setBorderRadius] = useState('8px');
   const [fontFamily, setFontFamily] = useState('Inter');
 
@@ -15,15 +17,23 @@ export default function SettingsPage() {
     const computedStyles = getComputedStyle(root);
     
     const savedPrimary = localStorage.getItem('theme-primary');
+    const savedPrimaryFg = localStorage.getItem('theme-primary-fg');
     const savedSecondary = localStorage.getItem('theme-secondary');
+    const savedSecondaryFg = localStorage.getItem('theme-secondary-fg');
     const savedRadius = localStorage.getItem('theme-radius');
     const savedFont = localStorage.getItem('theme-font');
 
     if (savedPrimary) setPrimaryColor(savedPrimary);
     else setPrimaryColor(computedStyles.getPropertyValue('--primary-color').trim() || '#0070f3');
 
+    if (savedPrimaryFg) setPrimaryForeground(savedPrimaryFg);
+    else setPrimaryForeground(computedStyles.getPropertyValue('--primary-foreground').trim() || '#ffffff');
+
     if (savedSecondary) setSecondaryColor(savedSecondary);
     else setSecondaryColor(computedStyles.getPropertyValue('--secondary-color').trim() || '#1c1c1e');
+
+    if (savedSecondaryFg) setSecondaryForeground(savedSecondaryFg);
+    else setSecondaryForeground(computedStyles.getPropertyValue('--secondary-foreground').trim() || '#ffffff');
 
     if (savedRadius) setBorderRadius(savedRadius);
     else setBorderRadius(computedStyles.getPropertyValue('--border-radius').trim() || '8px');
@@ -36,7 +46,9 @@ export default function SettingsPage() {
   useEffect(() => {
     const root = document.documentElement;
     root.style.setProperty('--primary-color', primaryColor);
+    root.style.setProperty('--primary-foreground', primaryForeground);
     root.style.setProperty('--secondary-color', secondaryColor);
+    root.style.setProperty('--secondary-foreground', secondaryForeground);
     root.style.setProperty('--border-radius', borderRadius);
     
     let fontString = fontFamily;
@@ -46,23 +58,31 @@ export default function SettingsPage() {
     root.style.setProperty('--font-family', fontString);
 
     localStorage.setItem('theme-primary', primaryColor);
+    localStorage.setItem('theme-primary-fg', primaryForeground);
     localStorage.setItem('theme-secondary', secondaryColor);
+    localStorage.setItem('theme-secondary-fg', secondaryForeground);
     localStorage.setItem('theme-radius', borderRadius);
     localStorage.setItem('theme-font', fontFamily);
-  }, [primaryColor, secondaryColor, borderRadius, fontFamily]);
+  }, [primaryColor, primaryForeground, secondaryColor, secondaryForeground, borderRadius, fontFamily]);
 
   const resetTheme = () => {
     setPrimaryColor('#0070f3');
+    setPrimaryForeground('#ffffff');
     setSecondaryColor('#1c1c1e');
+    setSecondaryForeground('#ffffff');
     setBorderRadius('8px');
     setFontFamily('Inter');
     localStorage.removeItem('theme-primary');
+    localStorage.removeItem('theme-primary-fg');
     localStorage.removeItem('theme-secondary');
+    localStorage.removeItem('theme-secondary-fg');
     localStorage.removeItem('theme-radius');
     localStorage.removeItem('theme-font');
     const root = document.documentElement;
     root.style.removeProperty('--primary-color');
+    root.style.removeProperty('--primary-foreground');
     root.style.removeProperty('--secondary-color');
+    root.style.removeProperty('--secondary-foreground');
     root.style.removeProperty('--border-radius');
     root.style.removeProperty('--font-family');
   };
@@ -93,6 +113,20 @@ export default function SettingsPage() {
         </div>
 
         <div className="setting-card">
+          <h3 className="setting-title">Primary Foreground</h3>
+          <p className="setting-desc">Used for text and icons inside primary elements.</p>
+          <div className="color-picker-wrapper">
+            <input
+              type="color"
+              value={primaryForeground}
+              onChange={(e) => setPrimaryForeground(e.target.value)}
+              className="color-picker"
+            />
+            <span className="color-value">{primaryForeground}</span>
+          </div>
+        </div>
+
+        <div className="setting-card">
           <h3 className="setting-title">Secondary Color</h3>
           <p className="setting-desc">Used for secondary buttons and accents.</p>
           <div className="color-picker-wrapper">
@@ -103,6 +137,20 @@ export default function SettingsPage() {
               className="color-picker"
             />
             <span className="color-value">{secondaryColor}</span>
+          </div>
+        </div>
+
+        <div className="setting-card">
+          <h3 className="setting-title">Secondary Foreground</h3>
+          <p className="setting-desc">Used for text and icons inside secondary elements.</p>
+          <div className="color-picker-wrapper">
+            <input
+              type="color"
+              value={secondaryForeground}
+              onChange={(e) => setSecondaryForeground(e.target.value)}
+              className="color-picker"
+            />
+            <span className="color-value">{secondaryForeground}</span>
           </div>
         </div>
 

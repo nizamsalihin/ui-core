@@ -7,5 +7,5 @@ export default `.button {
     text-decoration: none;
     border: 1px solid var(--color-primary);
     background-color: var(--color-primary);
-    color: white;
+    color: var(--color-primary-foreground);
 }`;

@@ -58,3 +58,38 @@
   background-color: var(--primary-color);
   color: #fff;
 }
+
+.nav-submenu {
+  display: flex;
+  flex-direction: column;
+  padding-left: 1.5rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+  border-left: 2px solid var(--border-color);
+  margin-left: 1rem;
+}
+
+.nav-submenu-link {
+  display: block;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  color: #888;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  margin-bottom: 0.15rem;
+}
+
+[data-theme='dark'] .nav-submenu-link {
+  color: #999;
+}
+
+.nav-submenu-link:hover {
+  color: var(--text-color);
+  background-color: var(--hover-bg);
+}
+
+.nav-submenu-link.active {
+  color: var(--primary-color);
+  font-weight: 600;
+}
