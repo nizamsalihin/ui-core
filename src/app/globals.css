@@ -10,6 +10,14 @@
   --hover-bg: #f5f5f5;
   --code-bg: #1e1e1e;
   --code-text: #d4d4d4;
+
+  /* Button Component Variables */
+  --color-primary: var(--primary-color);
+  --color-secondary: var(--secondary-color);
+  --color-secondary-foreground: var(--text-color);
+  --color-orange-2: #ffedd5;
+  --color-orange-3: #fdba74;
+  --color-orange-4: #f97316;
 }
 
 [data-theme='dark'] {
