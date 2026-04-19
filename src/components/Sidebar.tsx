@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { Suspense } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { components } from '@/data/components';
 import './Sidebar.css';
 
@@ -57,16 +57,40 @@ function SidebarContent() {
 }
 
 export default function Sidebar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Close sidebar when route changes
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+
   return (
-    <aside className="sidebar">
-      <div className="sidebar-header">
-        <Link href="/" className="logo">
-          UI Docs
-        </Link>
-      </div>
-      <Suspense fallback={<div className="sidebar-nav">Loading navigation...</div>}>
-        <SidebarContent />
-      </Suspense>
-    </aside>
+    <>
+      <button 
+        className="mobile-nav-toggle" 
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label="Toggle navigation"
+      >
+        {isOpen ? (
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        ) : (
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        )}
+      </button>
+
+      {isOpen && <div className="sidebar-overlay" onClick={() => setIsOpen(false)} />}
+
+      <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
+        <div className="sidebar-header">
+          <Link href="/" className="logo">
+            UI Docs
+          </Link>
+        </div>
+        <Suspense fallback={<div className="sidebar-nav">Loading navigation...</div>}>
+          <SidebarContent />
+        </Suspense>
+      </aside>
+    </>
   );
 }

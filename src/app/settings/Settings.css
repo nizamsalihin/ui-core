@@ -9,6 +9,13 @@
   margin-bottom: 3rem;
 }
 
+@media (max-width: 640px) {
+  .settings-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
 .setting-card {
   background-color: var(--bg-color);
   border: 1px solid var(--border-color);
@@ -116,4 +123,20 @@
   background-color: var(--bg-color);
   border-radius: 8px;
   border: 1px dashed var(--border-color);
+}
+
+@media (max-width: 640px) {
+  .preview-section-settings {
+    padding: 1rem;
+  }
+  
+  .live-preview-box {
+    padding: 1.5rem;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .live-preview-box .btn {
+    margin-right: 0 !important;
+  }
 }

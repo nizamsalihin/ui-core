@@ -31,6 +31,13 @@
   transform: translateY(20px);
 }
 
+@media (max-width: 1024px) {
+  .theme-tweaks-toggle {
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+}
+
 /* Sidebar */
 .theme-tweaks-sidebar {
   position: fixed;
@@ -49,6 +56,17 @@
 
 .theme-tweaks-sidebar.open {
   right: 0;
+}
+
+@media (max-width: 640px) {
+  .theme-tweaks-sidebar {
+    width: 100vw;
+    right: -100vw;
+  }
+  
+  .theme-tweaks-sidebar.open {
+    right: 0;
+  }
 }
 
 .theme-tweaks-header {

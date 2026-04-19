@@ -70,10 +70,28 @@ code {
   padding: 2rem;
 }
 
+@media (max-width: 1024px) {
+  .container {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 1rem;
+  }
+}
+
 .page-title {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
+}
+
+@media (max-width: 640px) {
+  .page-title {
+    font-size: 1.875rem;
+  }
 }
 
 .page-description {
@@ -90,4 +108,11 @@ code {
 .main-content {
   margin-left: var(--sidebar-width);
   min-height: 100vh;
+  transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 1024px) {
+  .main-content {
+    margin-left: 0;
+  }
 }
