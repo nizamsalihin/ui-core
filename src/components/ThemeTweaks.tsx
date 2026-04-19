@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './ThemeTweaks.css';
 
 export default function ThemeTweaks() {
@@ -10,6 +10,33 @@ export default function ThemeTweaks() {
   const [secondaryColor, setSecondaryColor] = useState('#1c1c1e');
   const [secondaryForeground, setSecondaryForeground] = useState('#ffffff');
   const [borderRadius, setBorderRadius] = useState('8px');
+  const sidebarRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+
+    const handleClickOutside = (e: MouseEvent) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(e.target as Node)) {
+        // Only close if it's currently open
+        setIsOpen((prev) => {
+          if (prev) return false;
+          return prev;
+        });
+      }
+    };
+
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+      window.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -80,7 +107,7 @@ export default function ThemeTweaks() {
         </svg>
       </button>
 
-      <div className={`theme-tweaks-sidebar ${isOpen ? 'open' : ''}`}>
+      <div ref={sidebarRef} className={`theme-tweaks-sidebar ${isOpen ? 'open' : ''}`}>
         <div className="theme-tweaks-header">
           <h3>Theme Tweaks</h3>
           <button className="theme-tweaks-close" onClick={() => setIsOpen(false)}>
