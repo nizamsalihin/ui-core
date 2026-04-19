@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Sidebar from '@/components/Sidebar';
 import ComponentStyles from '@/components/ComponentStyles';
+import Topbar from '@/components/Topbar';
+import SearchModal from '@/components/SearchModal';
 
 export const metadata: Metadata = {
   title: 'UI Component Docs',
@@ -20,7 +22,11 @@ export default function RootLayout({
       </head>
       <body>
         <Sidebar />
-        <main className="main-content">{children}</main>
+        <main className="main-content">
+          <Topbar />
+          {children}
+        </main>
+        <SearchModal />
       </body>
     </html>
   );
