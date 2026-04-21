@@ -39,6 +39,12 @@ export default function ComponentDetailPage({ params }: { params: Promise<{ id: 
 
   const activeVariant = component.variants.find((v) => v.id === activeVariantId) || component.variants[0];
 
+  useEffect(() => {
+    if (activeTab === 'js' && !activeVariant.js) {
+      setActiveTab('html');
+    }
+  }, [activeVariant, activeTab]);
+
   const executedVariantRef = useRef<string | null>(null);
 
   // Override window.alert to show a premium toast notification
@@ -86,7 +92,7 @@ export default function ComponentDetailPage({ params }: { params: Promise<{ id: 
   }, []);
 
   useEffect(() => {
-    if (executedVariantRef.current === activeVariant.id) return;
+    if (executedVariantRef.current === activeVariant.id || !activeVariant.js) return;
     executedVariantRef.current = activeVariant.id;
 
     // Strip simple TS types to make it valid JS for execution (if any remain)
@@ -113,7 +119,7 @@ export default function ComponentDetailPage({ params }: { params: Promise<{ id: 
   }, [activeVariant]);
 
   const handleCopy = () => {
-    const codeToCopy = activeVariant[activeTab];
+    const codeToCopy = activeVariant[activeTab] || '';
     navigator.clipboard.writeText(codeToCopy).then(() => {
       setCopySuccess(true);
       setTimeout(() => setCopySuccess(false), 2000);
@@ -168,12 +174,14 @@ export default function ComponentDetailPage({ params }: { params: Promise<{ id: 
               >
                 CSS
               </button>
-              <button
-                className={`code-tab ${activeTab === 'js' ? 'active' : ''}`}
-                onClick={() => setActiveTab('js')}
-              >
-                Javascript
-              </button>
+              {activeVariant.js && (
+                <button
+                  className={`code-tab ${activeTab === 'js' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('js')}
+                >
+                  Javascript
+                </button>
+              )}
             </div>
             <button className="copy-btn" onClick={handleCopy}>
               {copySuccess ? 'Copied!' : 'Copy Code'}
@@ -191,7 +199,7 @@ export default function ComponentDetailPage({ params }: { params: Promise<{ id: 
                 lineHeight: '1.5',
               }}
             >
-              {activeVariant[activeTab]}
+              {activeVariant[activeTab] || ''}
             </SyntaxHighlighter>
           </div>
       </div>

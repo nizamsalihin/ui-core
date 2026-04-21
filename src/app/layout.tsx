@@ -6,7 +6,7 @@ import Topbar from '@/components/Topbar';
 import SearchModal from '@/components/SearchModal';
 
 export const metadata: Metadata = {
-  title: 'UI Component Docs',
+  title: 'UI CORE',
   description: 'Documentation for our UI components',
 };
 

@@ -26,12 +26,21 @@ import aiInsightsHtml from './components/button/ai-insights/html';
 import aiInsightsCss from './components/button/ai-insights/css';
 import aiInsightsJs from './components/button/ai-insights/js';
 
+import linkBaseHtml from './components/link/base/html';
+import linkBaseCss from './components/link/base/css';
+
+import linkActiveHoverHtml from './components/link/active-on-hover/html';
+import linkActiveHoverCss from './components/link/active-on-hover/css';
+
+import cardBasicHtml from './components/card/basic/html';
+import cardBasicCss from './components/card/basic/css';
+
 export interface ComponentVariant {
   id: string;
   name: string;
   html: string;
   css: string;
-  js: string;
+  js?: string;
 }
 
 export interface UIComponent {
@@ -106,9 +115,27 @@ export const components: UIComponent[] = [
       {
         id: 'basic',
         name: 'Basic Card',
-        html: `<div class="card">\n  <h3 class="card-title">Card Title</h3>\n  <p class="card-body">This is the body content of the card.</p>\n</div>`,
-        css: `.card {\n  background-color: var(--bg-color);\n  border: 1px solid var(--border-color);\n  border-radius: var(--border-radius);\n  padding: 1.5rem;\n  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);\n  transition: box-shadow 0.3s ease;\n}\n\n.card:hover {\n  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);\n}\n\n.card-title {\n  margin-bottom: 0.5rem;\n  font-size: 1.25rem;\n  font-weight: 700;\n  color: var(--text-color);\n}\n\n.card-body {\n  color: #666;\n  font-size: 1rem;\n  line-height: 1.5;\n}`,
-        js: `// No dynamic behavior needed for the basic card`
+        html: cardBasicHtml,
+        css: cardBasicCss
+      }
+    ]
+  },
+  {
+    id: 'link',
+    name: 'Link',
+    description: 'Text links for navigation or secondary actions.',
+    variants: [
+      {
+        id: 'base',
+        name: 'Base',
+        html: linkBaseHtml,
+        css: linkBaseCss
+      },
+      {
+        id: 'active-on-hover',
+        name: 'Active on Hover',
+        html: linkActiveHoverHtml,
+        css: linkActiveHoverCss
       }
     ]
   }
