@@ -1,25 +1,40 @@
 export default `.card {
-  background-color: var(--bg-color);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  padding: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: box-shadow 0.3s ease;
+    background-color: var(--bg-card);
+    color: var(--primary-foreground);
+    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+    padding: 16px;
+    transition: background-color .2s ease, box-shadow .2s ease;
 }
 
-.card:hover {
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+.card__value {
+    font: 600 32px/1.2 var(--font-primary);
 }
 
-.card-title {
-  margin-bottom: 0.5rem;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text-color);
+.card__icon-wrapper {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    user-select: none;
+    color: var(--text-muted);
+    transition: color .2s ease;
 }
 
-.card-body {
-  color: #666;
-  font-size: 1rem;
-  line-height: 1.5;
+.card__unit {
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.card__title {
+    font: 600 20px/1.2 var(--font-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.card__desc {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.4;
 }`;

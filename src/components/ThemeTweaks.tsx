@@ -6,9 +6,12 @@ import './ThemeTweaks.css';
 export default function ThemeTweaks() {
   const [isOpen, setIsOpen] = useState(false);
   const [primaryColor, setPrimaryColor] = useState('#0070f3');
-  const [primaryForeground, setPrimaryForeground] = useState('#ffffff');
+  const [primaryForeground, setPrimaryForeground] = useState('#111111');
   const [secondaryColor, setSecondaryColor] = useState('#1c1c1e');
   const [secondaryForeground, setSecondaryForeground] = useState('#ffffff');
+  const [bgCard, setBgCard] = useState('#ffffff');
+  const [textMuted, setTextMuted] = useState('#666666');
+  const [cardShadow, setCardShadow] = useState('0 4px 6px rgba(0, 0, 0, 0.05)');
   const [borderRadius, setBorderRadius] = useState('8px');
   const sidebarRef = useRef<HTMLDivElement>(null);
 
@@ -46,19 +49,31 @@ export default function ThemeTweaks() {
     const savedPrimaryFg = localStorage.getItem('theme-primary-fg');
     const savedSecondary = localStorage.getItem('theme-secondary');
     const savedSecondaryFg = localStorage.getItem('theme-secondary-fg');
+    const savedBgCard = localStorage.getItem('theme-bg-card');
+    const savedTextMuted = localStorage.getItem('theme-text-muted');
+    const savedCardShadow = localStorage.getItem('theme-card-shadow');
     const savedRadius = localStorage.getItem('theme-radius');
 
     if (savedPrimary) setPrimaryColor(savedPrimary);
     else setPrimaryColor(computedStyles.getPropertyValue('--primary-color').trim() || '#0070f3');
 
     if (savedPrimaryFg) setPrimaryForeground(savedPrimaryFg);
-    else setPrimaryForeground(computedStyles.getPropertyValue('--primary-foreground').trim() || '#ffffff');
+    else setPrimaryForeground(computedStyles.getPropertyValue('--primary-foreground').trim() || '#111111');
 
     if (savedSecondary) setSecondaryColor(savedSecondary);
     else setSecondaryColor(computedStyles.getPropertyValue('--secondary-color').trim() || '#1c1c1e');
 
     if (savedSecondaryFg) setSecondaryForeground(savedSecondaryFg);
     else setSecondaryForeground(computedStyles.getPropertyValue('--secondary-foreground').trim() || '#ffffff');
+
+    if (savedBgCard) setBgCard(savedBgCard);
+    else setBgCard(computedStyles.getPropertyValue('--bg-card').trim() || '#ffffff');
+
+    if (savedTextMuted) setTextMuted(savedTextMuted);
+    else setTextMuted(computedStyles.getPropertyValue('--text-muted').trim() || '#666666');
+
+    if (savedCardShadow) setCardShadow(savedCardShadow);
+    else setCardShadow(computedStyles.getPropertyValue('--card-shadow').trim() || '0 4px 6px rgba(0, 0, 0, 0.05)');
 
     if (savedRadius) setBorderRadius(savedRadius);
     else setBorderRadius(computedStyles.getPropertyValue('--border-radius').trim() || '8px');
@@ -86,6 +101,24 @@ export default function ThemeTweaks() {
     setSecondaryForeground(val);
     document.documentElement.style.setProperty('--secondary-foreground', val);
     localStorage.setItem('theme-secondary-fg', val);
+  };
+
+  const handleBgCardChange = (val: string) => {
+    setBgCard(val);
+    document.documentElement.style.setProperty('--bg-card', val);
+    localStorage.setItem('theme-bg-card', val);
+  };
+
+  const handleTextMutedChange = (val: string) => {
+    setTextMuted(val);
+    document.documentElement.style.setProperty('--text-muted', val);
+    localStorage.setItem('theme-text-muted', val);
+  };
+
+  const handleCardShadowChange = (val: string) => {
+    setCardShadow(val);
+    document.documentElement.style.setProperty('--card-shadow', val);
+    localStorage.setItem('theme-card-shadow', val);
   };
 
   const handleRadiusChange = (val: string) => {
@@ -169,6 +202,43 @@ export default function ThemeTweaks() {
               />
               <span>{secondaryForeground}</span>
             </div>
+          </div>
+
+          <div className="tweak-item">
+            <label>Card Background</label>
+            <div className="tweak-input-wrapper">
+              <input 
+                type="color" 
+                value={bgCard} 
+                onChange={(e) => handleBgCardChange(e.target.value)} 
+                className="tweak-color"
+              />
+              <span>{bgCard}</span>
+            </div>
+          </div>
+
+          <div className="tweak-item">
+            <label>Muted Text</label>
+            <div className="tweak-input-wrapper">
+              <input 
+                type="color" 
+                value={textMuted} 
+                onChange={(e) => handleTextMutedChange(e.target.value)} 
+                className="tweak-color"
+              />
+              <span>{textMuted}</span>
+            </div>
+          </div>
+
+          <div className="tweak-item">
+            <label>Card Shadow</label>
+            <input 
+              type="text" 
+              value={cardShadow} 
+              onChange={(e) => handleCardShadowChange(e.target.value)} 
+              className="tweak-text-input"
+              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid var(--border-color)', background: 'var(--bg-color)', color: 'var(--text-color)' }}
+            />
           </div>
           
           <div className="tweak-item">
