@@ -22,7 +22,7 @@ export default function ComponentDetailPage({ params }: { params: Promise<{ id: 
   const searchParams = useSearchParams();
   const queryVariant = searchParams.get('variant');
 
-  const [activeVariantId, setActiveVariantId] = useState(queryVariant || component.variants[0]?.id);
+  const [activeVariantId, setActiveVariantId] = useState(component.variants[0]?.id);
 
   useEffect(() => {
     if (queryVariant && component.variants.some(v => v.id === queryVariant)) {

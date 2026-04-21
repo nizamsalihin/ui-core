@@ -1,8 +1,13 @@
+'use client';
+
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { components } from '@/data/components';
 import './Home.css';
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <div className="container">
       <header className="home-header">
@@ -15,8 +20,13 @@ export default function Home() {
 
       <div className="component-grid">
         {components.map((component) => (
-          <Link href={`/components/${component.id}`} key={component.id} className="component-card">
-            <div className="component-card-preview">
+          <div 
+            key={component.id} 
+            className="component-card"
+            onClick={() => router.push(`/components/${component.id}`)}
+            style={{ cursor: 'pointer' }}
+          >
+            <div className="component-card-preview" style={{ pointerEvents: 'none' }}>
               {/* Previewing the first variant html */}
               <div
                 dangerouslySetInnerHTML={{ __html: component.variants[0]?.html || '' }}
@@ -28,7 +38,7 @@ export default function Home() {
               <p className="component-card-desc">{component.description}</p>
               <span className="variant-count">{component.variants.length} Variants</span>
             </div>
-          </Link>
+          </div>
         ))}
       </div>
     </div>

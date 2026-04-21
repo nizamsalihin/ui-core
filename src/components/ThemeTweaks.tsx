@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import './ThemeTweaks.css';
 
 export default function ThemeTweaks() {
+  const [isMounted, setIsMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [primaryColor, setPrimaryColor] = useState('#0070f3');
   const [primaryForeground, setPrimaryForeground] = useState('#111111');
@@ -14,6 +15,10 @@ export default function ThemeTweaks() {
   const [cardShadow, setCardShadow] = useState('0 4px 6px rgba(0, 0, 0, 0.05)');
   const [borderRadius, setBorderRadius] = useState('8px');
   const sidebarRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -126,6 +131,8 @@ export default function ThemeTweaks() {
     document.documentElement.style.setProperty('--border-radius', val);
     localStorage.setItem('theme-radius', val);
   };
+
+  if (!isMounted) return null;
 
   return (
     <>
